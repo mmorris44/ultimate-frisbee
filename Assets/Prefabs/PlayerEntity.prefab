@@ -332,6 +332,7 @@ GameObject:
   - component: {fileID: 646368117824027401}
   - component: {fileID: 6262454738518398256}
   - component: {fileID: 746106825090768078}
+  - component: {fileID: 4724564985771375769}
   m_Layer: 0
   m_Name: PlayerEntity
   m_TagString: Untagged
@@ -449,6 +450,22 @@ MonoBehaviour:
   localScaleSensitivity: 0.01
   compressRotation: 1
   target: {fileID: 2387376987171077917}
+--- !u!114 &4724564985771375769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2387376988415360420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  animator: {fileID: 6230054456792687021}
 --- !u!1 &2387376988481041504
 GameObject:
   m_ObjectHideFlags: 0
