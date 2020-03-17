@@ -78,8 +78,6 @@ GameObject:
   - component: {fileID: 2387376987171077915}
   - component: {fileID: 2387376987171077914}
   - component: {fileID: 2387376987171077912}
-  - component: {fileID: 6172431099852442515}
-  - component: {fileID: 3009831423133757809}
   m_Layer: 0
   m_Name: FreeCamera
   m_TagString: MainCamera
@@ -151,7 +149,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2387376987171077916}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &2387376987171077912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,41 +162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7649f75f7f794ec4a8a1ccbb222eba36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   speedH: 2
   speedV: 2
   cameraSpeed: 15
---- !u!114 &6172431099852442515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2387376987171077916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  m_AssetId: 
---- !u!114 &3009831423133757809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2387376987171077916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  m_AssetId: 
 --- !u!1 &2387376987249695063
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +177,6 @@ GameObject:
   - component: {fileID: 2387376987249695061}
   - component: {fileID: 2387376987249695060}
   - component: {fileID: 2387376987249695059}
-  - component: {fileID: 2613357865813484171}
   m_Layer: 0
   m_Name: FollowCamera
   m_TagString: MainCamera
@@ -283,7 +248,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2387376987249695063}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &2387376987249695059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,28 +261,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b69730ae0fe3e4497921d0ea2da0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   player: {fileID: 6230054456792686664}
   speed: 0.5
   minCamDistance: 7
   maxCamDistance: 8
   rotationSpeed: 150
---- !u!114 &2613357865813484171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2387376987249695063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  m_AssetId: 
 --- !u!1 &2387376987602460670
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +276,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2387376987602460671}
   - component: {fileID: 2387376987602460668}
-  - component: {fileID: 7739303598395482768}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -365,29 +312,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 522a517564f055846a3bf5216f0439a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   cameras:
   - {fileID: 2387376987249695063}
   - {fileID: 2387376987171077916}
   - {fileID: 6230054456792686794}
   firstPersonCamera: {fileID: 6230054456792686794}
   current: 0
---- !u!114 &7739303598395482768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2387376987602460670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  m_AssetId: 
 --- !u!1 &2387376988415360420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1799,8 +1729,6 @@ GameObject:
   - component: {fileID: 6230054456792687024}
   - component: {fileID: 6230054456792687039}
   - component: {fileID: 6230054456792687038}
-  - component: {fileID: 6230054456792687036}
-  - component: {fileID: 6230054456792686726}
   m_Layer: 0
   m_Name: NormalPlayer
   m_TagString: Untagged
@@ -1922,8 +1850,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b609cd7e328da948bb5027395c3de2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   layoutSpeed: 10
   layoutDuration: 1
   layoutRecovery: 2
@@ -1934,43 +1860,8 @@ MonoBehaviour:
   pivotVerticalReach: 0.3
   pivotSpeed: 0.01
   reach: 2
-  disc: {fileID: 0}
   heldDiscTransform: {fileID: 6230054456792686620}
   cameraController: {fileID: 2387376987602460668}
---- !u!114 &6230054456792687036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6230054456792686615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  m_AssetId: 
---- !u!114 &6230054456792686726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6230054456792686615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 1
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
-  compressRotation: 1
 --- !u!1 &6230054456792686621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,7 +2168,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6230054456792686794}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1 &6230054456792686795
 GameObject:
   m_ObjectHideFlags: 0

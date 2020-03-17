@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public enum PlayerState { FREE, DISC, MARKING, LAYOUT }
 
-public class PlayerController : NetworkBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float layoutSpeed = 10f;
     public float layoutDuration = 1f;
@@ -22,13 +22,13 @@ public class PlayerController : NetworkBehaviour
 
     public float reach = 2f;
 
-    public GameObject disc;
     public Transform heldDiscTransform;
     public CameraController cameraController;
 
     private Animator animator;
     private CharacterController characterController;
     private DiscController discController;
+    private GameObject disc;
 
     private float v, h, sprint;
     private float layoutEnd;
@@ -40,17 +40,18 @@ public class PlayerController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!isLocalPlayer) return;
+        //if (!isLocalPlayer) return;
 
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+        disc = GameObject.Find("Disc");
         discController = disc.GetComponent<DiscController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isLocalPlayer) return;
+        //if (!isLocalPlayer) return;
 
         // Check sprinting
         if (Input.GetKey(KeyCode.LeftShift))
@@ -76,7 +77,7 @@ public class PlayerController : NetworkBehaviour
 
     void FixedUpdate()
     {
-        if (!isLocalPlayer) return;
+        //if (!isLocalPlayer) return;
 
         // Set animation variables
         animator.SetFloat("Walk", v);

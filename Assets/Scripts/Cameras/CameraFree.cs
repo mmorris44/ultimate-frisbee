@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFree : NetworkBehaviour
+public class CameraFree : MonoBehaviour
 {
     public float speedH = 2.0f;
     public float speedV = 2.0f;
@@ -14,7 +14,7 @@ public class CameraFree : NetworkBehaviour
 
     void Update()
     {
-        if (!isLocalPlayer) return;
+        //if (!isLocalPlayer) return;
         yaw += speedH * Input.GetAxis("Mouse X");
         pitch -= speedV * Input.GetAxis("Mouse Y");
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : NetworkBehaviour
+public class CameraController : MonoBehaviour
 {
     public GameObject[] cameras;
     public GameObject firstPersonCamera;
@@ -14,7 +14,7 @@ public class CameraController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!isLocalPlayer) return;
+        //if (!isLocalPlayer) return;
         //Cursor.visible = false;
 
         for (int i = 0; i < cameras.Length; ++i)
@@ -29,7 +29,7 @@ public class CameraController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isLocalPlayer) return;
+        //if (!isLocalPlayer) return;
 
         if (Input.GetKeyDown("c") && !hasDisc)
         {

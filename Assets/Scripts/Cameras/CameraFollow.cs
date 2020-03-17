@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraFollow : NetworkBehaviour
+public class CameraFollow : MonoBehaviour
 {
     public Transform player;
     public float speed = 0.9f;
@@ -21,7 +21,7 @@ public class CameraFollow : NetworkBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (!isLocalPlayer) return;
+        //if (!isLocalPlayer) return;
 
         // Go to nice spot
         Vector3 direction = player.position - transform.position;

@@ -28,16 +28,12 @@ public class DiscController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!isLocalPlayer) return;
-
         discBody = GetComponent<Rigidbody>();
         discBody.maxAngularVelocity = 100;
     }
 
     void LateUpdate()
     {
-        if (!isLocalPlayer) return;
-
         // If held
         if (discState == DiscState.HELD)
         {
