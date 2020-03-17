@@ -14,10 +14,15 @@ public class CameraFree : MonoBehaviour
 
     void Update()
     {
-        //if (!isLocalPlayer) return;
+        if (!isLocalPlayer()) return;
         yaw += speedH * Input.GetAxis("Mouse X");
         pitch -= speedV * Input.GetAxis("Mouse Y");
 
         transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+    }
+
+    bool isLocalPlayer()
+    {
+        return gameObject.transform.parent.parent.gameObject.GetComponent<NetworkIdentity>().isLocalPlayer;
     }
 }

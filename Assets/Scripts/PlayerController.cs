@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //if (!isLocalPlayer) return;
+        if (!isLocalPlayer()) return;
 
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (!isLocalPlayer) return;
+        if (!isLocalPlayer()) return;
 
         // Check sprinting
         if (Input.GetKey(KeyCode.LeftShift))
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //if (!isLocalPlayer) return;
+        if (!isLocalPlayer()) return;
 
         // Set animation variables
         animator.SetFloat("Walk", v);
@@ -176,6 +176,11 @@ public class PlayerController : MonoBehaviour
     {
         v = v / 2;
         h = h / 2;
+    }
+
+    bool isLocalPlayer ()
+    {
+        return gameObject.transform.parent.gameObject.GetComponent<NetworkIdentity>().isLocalPlayer;
     }
 
     void makeThrow (ThrowDistance throwDistance, ThrowCurve throwCurve, ThrowType throwType)

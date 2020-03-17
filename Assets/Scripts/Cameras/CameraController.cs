@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //if (!isLocalPlayer) return;
+        if (!isLocalPlayer()) return;
         //Cursor.visible = false;
 
         for (int i = 0; i < cameras.Length; ++i)
@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (!isLocalPlayer) return;
+        if (!isLocalPlayer()) return;
 
         if (Input.GetKeyDown("c") && !hasDisc)
         {
@@ -52,5 +52,10 @@ public class CameraController : MonoBehaviour
             cameras[current].SetActive(false);
             firstPersonCamera.SetActive(true);
         }
+    }
+
+    bool isLocalPlayer()
+    {
+        return gameObject.transform.parent.gameObject.GetComponent<NetworkIdentity>().isLocalPlayer;
     }
 }

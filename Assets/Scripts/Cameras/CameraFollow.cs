@@ -21,7 +21,7 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        //if (!isLocalPlayer) return;
+        if (!isLocalPlayer()) return;
 
         // Go to nice spot
         Vector3 direction = player.position - transform.position;
@@ -43,5 +43,10 @@ public class CameraFollow : MonoBehaviour
         transform.RotateAround(playerCenter, Vector3.up, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime);
 
         transform.LookAt(player);
+    }
+
+    bool isLocalPlayer()
+    {
+        return gameObject.transform.parent.parent.gameObject.GetComponent<NetworkIdentity>().isLocalPlayer;
     }
 }
