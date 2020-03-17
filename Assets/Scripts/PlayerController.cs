@@ -28,14 +28,12 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private DiscController discController;
     private GameObject disc;
-    private PlayerMessagePasser messenger;
 
     private float v, h, sprint;
     private float layoutEnd;
     private Vector3 initialDiscPosition;
 
     private PlayerState playerState = PlayerState.FREE;
-    private bool hasDisc = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +43,6 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         disc = GameObject.Find("Disc");
         discController = disc.GetComponent<DiscController>();
-        messenger = GetComponentInParent<PlayerMessagePasser>();
     }
 
     // Update is called once per frame
