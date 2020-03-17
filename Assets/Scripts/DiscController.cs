@@ -37,7 +37,6 @@ public class DiscController : NetworkBehaviour
         // If held
         if (discState == DiscState.HELD)
         {
-            // Set disc position
             transform.position = heldDiscTransform.position;
             transform.rotation = heldDiscTransform.rotation;
         }
@@ -83,13 +82,15 @@ public class DiscController : NetworkBehaviour
     {
         if (!isActive)
         {
-            discBody.detectCollisions = false;
-            discBody.useGravity = false;
+            //discBody.detectCollisions = false;
+            //discBody.useGravity = false;
             discBody.velocity = Vector3.zero;
+            discBody.isKinematic = true;
         } else
         {
-            discBody.detectCollisions = true;
-            discBody.useGravity = true;
+            //discBody.detectCollisions = true;
+            //discBody.useGravity = true;
+            discBody.isKinematic = false;
         }
     }
 

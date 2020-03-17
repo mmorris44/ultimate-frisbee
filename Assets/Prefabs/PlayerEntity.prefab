@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 6262454738518398256}
   - component: {fileID: 746106825090768078}
   - component: {fileID: 4724564985771375769}
+  - component: {fileID: 2581337404237586422}
   m_Layer: 0
   m_Name: PlayerEntity
   m_TagString: Untagged
@@ -463,9 +464,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0.01
   clientAuthority: 1
   animator: {fileID: 6230054456792687021}
+--- !u!114 &2581337404237586422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2387376988415360420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28212861b354ab45b42474a35984ff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1 &2387376988481041504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,7 +1897,7 @@ CharacterController:
   m_GameObject: {fileID: 6230054456792686615}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 2.8
   m_Radius: 0.5
@@ -1898,7 +1913,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6230054456792686615}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 939f063999141264b80a43b2b3634f38, type: 3}
   m_Name: 
@@ -1914,7 +1929,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6230054456792686615}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43610ed66d3ed1f4aab3153e77ea4913, type: 3}
   m_Name: 

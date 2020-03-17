@@ -26,9 +26,9 @@ public class PlayerController : MonoBehaviour
     public CameraController cameraController;
 
     private Animator animator;
-    private CharacterController characterController;
     private DiscController discController;
     private GameObject disc;
+    private PlayerMessagePasser messenger;
 
     private float v, h, sprint;
     private float layoutEnd;
@@ -43,9 +43,9 @@ public class PlayerController : MonoBehaviour
         if (!isLocalPlayer()) return;
 
         animator = GetComponent<Animator>();
-        characterController = GetComponent<CharacterController>();
         disc = GameObject.Find("Disc");
         discController = disc.GetComponent<DiscController>();
+        messenger = GetComponentInParent<PlayerMessagePasser>();
     }
 
     // Update is called once per frame
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
         // Move forward fast if running
         if (animator.GetFloat("Run") == 0.2f)
         {
-            characterController.Move(transform.TransformDirection(Vector3.forward) * v * topSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * v * topSpeed * Time.deltaTime);
         }
 
         // Rotate fast if turning
@@ -196,7 +196,9 @@ public class PlayerController : MonoBehaviour
     {
         playerState = PlayerState.DISC;
         initialDiscPosition = heldDiscTransform.localPosition; // Save the initial position
-        discController.pickup(heldDiscTransform); // Tell the disc that it is now held
+        // Tell the disc that it is now held
+        //messenger.CmdPickup(heldDiscTransform);
+        discController.pickup(heldDiscTransform);
         cameraController.toggleFirstPersonCamera(); // Switch to FPS
     }
 
@@ -218,14 +220,14 @@ public class PlayerController : MonoBehaviour
         // Build up
         while (Time.time < layoutEnd - layoutDuration * 0.7f)
         {
-            characterController.Move(transform.TransformDirection(Vector3.forward) * layoutSpeed / 2 * Time.deltaTime);
+            transform.Translate(Vector3.forward * layoutSpeed / 2 * Time.deltaTime);
             yield return null;
         }
 
         // Lay
         while (Time.time < layoutEnd)
         {
-            characterController.Move(transform.TransformDirection(Vector3.forward) * layoutSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * layoutSpeed * Time.deltaTime);
             yield return null;
         }
         yield return new WaitForSeconds(layoutRecovery);
