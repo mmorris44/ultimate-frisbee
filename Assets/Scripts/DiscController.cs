@@ -18,12 +18,15 @@ public class DiscController : NetworkBehaviour
     public float[] distanceValues; // Forward force for each distance
 
     private Rigidbody discBody;
-    private DiscState discState = DiscState.GROUND;
-
-    private Transform heldDiscTransform;
     private float curveEndTime;
     private int curveIndex;
     private Vector3 curveDirection;
+    
+    [SyncVar]
+    private Transform heldDiscTransform;
+
+    [SyncVar]
+    private DiscState discState = DiscState.GROUND;
 
     // Start is called before the first frame update
     void Start()
@@ -37,9 +40,20 @@ public class DiscController : NetworkBehaviour
         // If held
         if (discState == DiscState.HELD)
         {
-            transform.position = heldDiscTransform.position;
-            transform.rotation = heldDiscTransform.rotation;
+            //SetDiscTransform();
         }
+    }
+
+    void SetDiscTransform()
+    {
+        transform.position = heldDiscTransform.position;
+        transform.rotation = heldDiscTransform.rotation;
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        StartCoroutine("HoldDiscRoutine"); // Always try to move disc to transform if disc held
     }
 
     public DiscState getDiscState()
@@ -104,6 +118,15 @@ public class DiscController : NetworkBehaviour
         while (Time.time < curveEndTime)
         {
             discBody.AddForce(curveDirection * curveValues[curveIndex]);
+            yield return null;
+        }
+    }
+
+    IEnumerator HoldDiscRoutine ()
+    {
+        while(true)
+        {
+            if (discState == DiscState.HELD) SetDiscTransform();
             yield return null;
         }
     }
