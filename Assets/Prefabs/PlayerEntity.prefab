@@ -1997,7 +1997,7 @@ MonoBehaviour:
   pivotHorizontalReach: 0.4
   pivotVerticalReach: 0.3
   pivotSpeed: 0.01
-  reach: 2
+  reach: 10
   heldDiscTransform: {fileID: 6230054456792686620}
   cameraController: {fileID: 2387376987602460668}
 --- !u!65 &288543371268266034

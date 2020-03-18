@@ -18,6 +18,8 @@ public class DiscController : NetworkBehaviour
     public float[] heightValues; // Up force for each distance
     public float[] distanceValues; // Forward force for each distance
 
+    public GameObject interactAlert;
+
     private Rigidbody discBody;
     private float curveEndTime;
     private int curveIndex;

@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 initialDiscPosition;
 
     private PlayerState playerState = PlayerState.FREE;
+    private bool discCaught = false;
 
     // Start is called before the first frame update
     void Start()
@@ -63,13 +64,18 @@ public class PlayerController : MonoBehaviour
             sprint = 0f;
         }
 
+        // Set disc alert to inactive by default
+        discController.interactAlert.SetActive(false);
+
         // Check player state
         if (playerState == PlayerState.FREE)
         {
             checkFreeActions();
+            checkForCatch();
         } else if (playerState == PlayerState.LAYOUT)
         {
             checkLayoutActions();
+            checkForCatch();
         } else if (playerState == PlayerState.DISC)
         {
             checkDiscActions();
@@ -90,6 +96,19 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("Walk", 0);
             animator.SetFloat("Run", 0);
             animator.SetFloat("Turn", 0);
+        }
+    }
+
+    void checkForCatch()
+    {
+        // Check is disc is catchable
+        if (distanceToDisc() < reach && discController.getDiscState() == DiscState.FLIGHT)
+        {
+            discController.interactAlert.SetActive(true);
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
+            {
+                makeCatch();
+            }
         }
     }
 
@@ -127,7 +146,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey("c")) throwCurve = ThrowCurve.RIGHT;
 
         // Check normal vs hammer throw
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
         {
             makeThrow(throwDistance, throwCurve, ThrowType.NORMAL);
         }
@@ -139,15 +158,30 @@ public class PlayerController : MonoBehaviour
 
     void checkFreeActions()
     {
+        // If disc caught, switch to DISC state and stop
+        if (discCaught)
+        {
+            discCaught = false;
+            playerState = PlayerState.DISC;
+            cameraController.toggleFirstPersonCamera(); // Switch to FPS
+            return;
+        }
+
         // Vertical and horizontal input
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
 
-        // Pick up disc
-        if (distanceToDisc() < 2 && Input.GetKeyDown("e") && discController.getDiscState() == DiscState.GROUND)
+        
+        if (distanceToDisc() < 2 && discController.getDiscState() == DiscState.GROUND)
         {
-            pickup();
-            return;
+            discController.interactAlert.SetActive(true);
+
+            // Pick up disc
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
+            {
+                pickup();
+                return;
+            }
         }
 
         // Try to layout
@@ -210,8 +244,15 @@ public class PlayerController : MonoBehaviour
         initialDiscPosition = heldDiscTransform.localPosition; // Save the initial position
         // Tell the disc that it is now held
         playerNetworkController.pickup(heldDiscTransform);
-        //discController.pickup(heldDiscTransform);
         cameraController.toggleFirstPersonCamera(); // Switch to FPS
+    }
+
+    void makeCatch ()
+    {
+        discCaught = true;
+        initialDiscPosition = heldDiscTransform.localPosition; // Save the initial position
+        // Tell the disc that it is now held
+        playerNetworkController.pickup(heldDiscTransform);
     }
 
     float distanceToDisc ()
