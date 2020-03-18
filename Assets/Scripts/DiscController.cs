@@ -38,12 +38,11 @@ public class DiscController : NetworkBehaviour
 
     private void Update()
     {
-        if (discState == DiscState.HELD)
-        {
-            useDiscBody(false); // No physics
-        } else
-        {
-            useDiscBody(true); // Use physics
+        // Only server use physics
+        if (!isServer) useDiscBody(false);
+        else {
+            if (discState == DiscState.HELD) useDiscBody(false);
+            else useDiscBody(true);
         }
     }
 
@@ -55,11 +54,7 @@ public class DiscController : NetworkBehaviour
         // If in flight, apply upward force based on current speed
         if (discState == DiscState.FLIGHT)
         {
-            Vector3 velocity = discBody.velocity;
-            Debug.Log("Disc velocity: " + velocity);
-            velocity.y = 0;
-            discBody.AddForce(Vector3.up * velocity.magnitude * discLiftForce);
-            Debug.Log("Applying vertical force: " + Vector3.up * velocity.magnitude * discLiftForce);
+            discBody.AddForce(Vector3.up * discBody.velocity.z * discLiftForce);
         }
     }
 
@@ -117,9 +112,6 @@ public class DiscController : NetworkBehaviour
         discBody.AddForce(transform.forward * distanceValues[distanceIndex]);
         discBody.AddForce(Vector3.up * heightValues[heightIndex]);
 
-        // Set disk angle
-        //transform.Rotate(0, 0, curveValues[curveIndex] * -10);
-
         // Spin the disc and make it fly
         discState = DiscState.FLIGHT;
         discBody.AddTorque(transform.up * rotationTorque);
@@ -128,27 +120,40 @@ public class DiscController : NetworkBehaviour
         curveEndTime = Time.time + durationValues[durationIndex];
         curveDirection = transform.right;
         StartCoroutine("CurveRoutine");
+
+        // Start routine for detecting collisions
+        StartCoroutine("CollisionsOnRoutine");
     }
 
     void useDiscBody(bool isActive)
     {
         if (!isActive)
         {
-            //discBody.detectCollisions = false;
-            //discBody.useGravity = false;
             discBody.velocity = Vector3.zero;
             discBody.isKinematic = true;
+            discBody.detectCollisions = false;
         } else
         {
-            //discBody.detectCollisions = true;
-            //discBody.useGravity = true;
             discBody.isKinematic = false;
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Ground") discState = DiscState.GROUND;
+        // Only check for collisions as the server
+        if (!isServer) return;
+
+        if (collision.gameObject.name == "Ground")
+        {
+            Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
+            discState = DiscState.GROUND;
+        }
+    }
+
+    IEnumerator CollisionsOnRoutine ()
+    {
+        yield return new WaitForSeconds(0.1f);
+        discBody.detectCollisions = true;
     }
 
     IEnumerator CurveRoutine ()
