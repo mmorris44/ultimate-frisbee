@@ -11,6 +11,7 @@ public enum ThrowType { NORMAL, HAMMER }
 public class DiscController : NetworkBehaviour
 {
     public float rotationTorque = 1000f;
+    public float discLiftForce = 1f;
 
     public float[] curveValues; // Right force for each curve type
     public float[] durationValues; // Time to curve disc for each distance
@@ -43,6 +44,22 @@ public class DiscController : NetworkBehaviour
         } else
         {
             useDiscBody(true); // Use physics
+        }
+    }
+
+    void FixedUpdate()
+    {
+        // Only execute on server
+        if (!isServer) return;
+
+        // If in flight, apply upward force based on current speed
+        if (discState == DiscState.FLIGHT)
+        {
+            Vector3 velocity = discBody.velocity;
+            Debug.Log("Disc velocity: " + velocity);
+            velocity.y = 0;
+            discBody.AddForce(Vector3.up * velocity.magnitude * discLiftForce);
+            Debug.Log("Applying vertical force: " + Vector3.up * velocity.magnitude * discLiftForce);
         }
     }
 

@@ -866,6 +866,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   rotationTorque: 100
+  discLiftForce: 1
   curveValues:
   - 2
   - 0
