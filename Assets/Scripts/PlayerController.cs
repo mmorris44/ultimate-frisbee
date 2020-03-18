@@ -35,8 +35,8 @@ public class PlayerController : MonoBehaviour
     private float layoutEnd;
     private Vector3 initialDiscPosition;
 
-    private PlayerState playerState = PlayerState.FREE;
-    private bool discCaught = false;
+    public PlayerState playerState = PlayerState.FREE; // TODO: Make private
+    public bool discCaught = false; // TODO: Make private
 
     // Start is called before the first frame update
     void Start()

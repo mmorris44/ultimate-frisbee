@@ -27,7 +27,7 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         // Request authority for disc
         NetworkIdentity id = disc.GetComponent<NetworkIdentity>();
-        //Debug.Log("[CLIENT] Requesting auth for " + id + " with current auth status " + id.hasAuthority);
+        Debug.Log("[CLIENT] Requesting auth for " + id + " with current auth status " + id.hasAuthority);
         CmdRequestAuthority(id);
     }
 
@@ -35,21 +35,21 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         // Release authority for disc
         NetworkIdentity id = disc.GetComponent<NetworkIdentity>();
-        //Debug.Log("[CLIENT] Releasing auth for " + id + " with current auth status " + id.hasAuthority);
+        Debug.Log("[CLIENT] Releasing auth for " + id + " with current auth status " + id.hasAuthority);
         CmdReleaseAuthority(id);
     }
 
     [Command]
     void CmdRequestAuthority(NetworkIdentity otherId)
     {
-        //Debug.Log("[SERVER] Assigning auth for " + otherId + " to " + connectionToClient.identity);
+        Debug.Log("[SERVER] Assigning auth for " + otherId + " to " + connectionToClient.identity);
         otherId.AssignClientAuthority(connectionToClient);
     }
 
     [Command]
     void CmdReleaseAuthority(NetworkIdentity otherId)
     {
-        //Debug.Log("[SERVER] Releasing auth for " + otherId);
+        Debug.Log("[SERVER] Releasing auth for " + otherId);
         otherId.RemoveClientAuthority();
     }
 }

@@ -12,6 +12,11 @@ public class CameraFree : MonoBehaviour
     private float yaw = 0.0f;
     private float pitch = 0.0f;
 
+    void Start()
+    {
+        transform.position = GameObject.Find("GameControl/FreeCameraPosition").transform.position;
+    }
+
     void Update()
     {
         if (!isLocalPlayer()) return;

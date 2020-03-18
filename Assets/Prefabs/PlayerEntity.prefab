@@ -263,8 +263,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 6230054456792686664}
   speed: 0.5
-  minCamDistance: 7
-  maxCamDistance: 8
+  minCamDistance: 14
+  maxCamDistance: 15
   rotationSpeed: 150
 --- !u!1 &2387376987602460670
 GameObject:

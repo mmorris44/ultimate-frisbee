@@ -24,10 +24,10 @@ public class DiscController : NetworkBehaviour
     private float curveEndTime;
     private int curveIndex;
     private Vector3 curveDirection;
-    private Transform heldDiscTransform;
+    public Transform heldDiscTransform; // TODO: Make private
 
     [SyncVar]
-    private DiscState discState = DiscState.GROUND;
+    public DiscState discState = DiscState.GROUND; // TODO: Make private
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +56,9 @@ public class DiscController : NetworkBehaviour
         // If in flight, apply upward force based on current speed
         if (discState == DiscState.FLIGHT)
         {
-            discBody.AddForce(Vector3.up * discBody.velocity.z * discLiftForce);
+            Vector3 velocity = discBody.velocity;
+            velocity.y = 0;
+            discBody.AddForce(Vector3.up * velocity.magnitude * discLiftForce);
         }
     }
 
@@ -92,13 +94,15 @@ public class DiscController : NetworkBehaviour
     [Command]
     public void CmdPickup ()
     {
+        Debug.Log("[SERVER] Request to update disc state received. Current state: " + discState);
         discState = DiscState.HELD;
+        Debug.Log("[SERVER] Disc state updated. Changed to: " + discState);
     }
 
     // Called when client receives authority over the disc
     public override void OnStartAuthority ()
     {
-        //Debug.Log("Auth has been granted, sending request for held disc state update");
+        Debug.Log("[CLIENT] Auth has been granted, sending request for held disc state update");
         CmdPickup();
     }
 
@@ -145,9 +149,12 @@ public class DiscController : NetworkBehaviour
         // Only check for collisions as the server
         if (!isServer) return;
 
+        // Don't worry about collision if disc is held
+        if (discState == DiscState.HELD) return;
+
         if (collision.gameObject.name == "Ground")
         {
-            //Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
+            Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
             discState = DiscState.GROUND;
         }
     }
