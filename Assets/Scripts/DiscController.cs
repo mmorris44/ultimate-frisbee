@@ -21,26 +21,40 @@ public class DiscController : NetworkBehaviour
     private float curveEndTime;
     private int curveIndex;
     private Vector3 curveDirection;
-    
-    [SyncVar]
     private Transform heldDiscTransform;
 
     [SyncVar]
-    private DiscState discState = DiscState.GROUND;
+    public DiscState discState = DiscState.GROUND; // TODO: make private later
 
     // Start is called before the first frame update
     void Start()
     {
         discBody = GetComponent<Rigidbody>();
         discBody.maxAngularVelocity = 100;
+
+        heldDiscTransform = transform; // TODO: remove later
+    }
+
+    private void Update()
+    {
+        if (discState == DiscState.HELD)
+        {
+            useDiscBody(false); // No physics
+        } else
+        {
+            useDiscBody(true); // Use physics
+        }
     }
 
     void LateUpdate()
     {
+        // Only execute with authority
+        if (!hasAuthority) return;
+
         // If held
         if (discState == DiscState.HELD)
         {
-            //SetDiscTransform();
+            SetDiscTransform();
         }
     }
 
@@ -50,12 +64,6 @@ public class DiscController : NetworkBehaviour
         transform.rotation = heldDiscTransform.rotation;
     }
 
-    public override void OnStartServer()
-    {
-        base.OnStartServer();
-        StartCoroutine("HoldDiscRoutine"); // Always try to move disc to transform if disc held
-    }
-
     public DiscState getDiscState()
     {
         return discState;
@@ -63,12 +71,25 @@ public class DiscController : NetworkBehaviour
 
     public void pickup(Transform heldDiscTransform)
     {
-        discState = DiscState.HELD;
         this.heldDiscTransform = heldDiscTransform;
-        useDiscBody(false); // No physics
     }
 
-    public void makeThrow(ThrowDistance throwDistance, ThrowCurve throwCurve, ThrowType throwType)
+    // Command to set the value of the state in the server
+    [Command]
+    public void CmdPickup ()
+    {
+        discState = DiscState.HELD;
+    }
+
+    // Called when client receives authority over the disc
+    public override void OnStartAuthority ()
+    {
+        Debug.Log("Auth has been granted, sending request for held disc state update");
+        CmdPickup();
+    }
+
+    [Command]
+    public void CmdMakeThrow(ThrowDistance throwDistance, ThrowCurve throwCurve, ThrowType throwType)
     {
         // Get indices for arrays from type of throw
         curveIndex = (int) throwCurve;
@@ -118,15 +139,6 @@ public class DiscController : NetworkBehaviour
         while (Time.time < curveEndTime)
         {
             discBody.AddForce(curveDirection * curveValues[curveIndex]);
-            yield return null;
-        }
-    }
-
-    IEnumerator HoldDiscRoutine ()
-    {
-        while(true)
-        {
-            if (discState == DiscState.HELD) SetDiscTransform();
             yield return null;
         }
     }

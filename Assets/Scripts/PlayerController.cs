@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private DiscController discController;
     private GameObject disc;
+    private PlayerNetworkController playerNetworkController;
 
     private float v, h, sprint;
     private float layoutEnd;
@@ -43,6 +44,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         disc = GameObject.Find("Disc");
         discController = disc.GetComponent<DiscController>();
+
+        playerNetworkController = GetComponentInParent<PlayerNetworkController>();
     }
 
     // Update is called once per frame
@@ -185,7 +188,8 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Throwing at distance " + throwDistance + ", curve " + throwCurve + ", and type " + throwType);
         heldDiscTransform.localPosition = initialDiscPosition; // Reset the held disc position
         playerState = PlayerState.FREE;
-        discController.makeThrow(throwDistance, throwCurve, throwType);
+        discController.CmdMakeThrow(throwDistance, throwCurve, throwType);
+        playerNetworkController.ReleaseDiscAuthority(); // Hand auth over disc back to server
         cameraController.toggleFirstPersonCamera();
     }
 
@@ -194,8 +198,8 @@ public class PlayerController : MonoBehaviour
         playerState = PlayerState.DISC;
         initialDiscPosition = heldDiscTransform.localPosition; // Save the initial position
         // Tell the disc that it is now held
-        //messenger.CmdPickup(heldDiscTransform);
-        discController.pickup(heldDiscTransform);
+        playerNetworkController.pickup(heldDiscTransform);
+        //discController.pickup(heldDiscTransform);
         cameraController.toggleFirstPersonCamera(); // Switch to FPS
     }
 
