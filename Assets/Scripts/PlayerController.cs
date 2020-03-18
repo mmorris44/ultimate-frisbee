@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public float turnSpeed = 100f;
     public float topSpeed = 1f;
+    public float shuffleSpeed = 1f;
 
     public float pivotTurnSpeed = 200f;
     public float pivotHorizontalReach = 0.4f; // Max 1.2
@@ -142,15 +143,11 @@ public class PlayerController : MonoBehaviour
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
 
-        // If disc within reach
-        if (distanceToDisc() < reach)
+        // Pick up disc
+        if (distanceToDisc() < 2 && Input.GetKeyDown("e") && discController.getDiscState() == DiscState.GROUND)
         {
-            // Pick up disc
-            if (v == 0 && Input.GetKeyDown("e") && discController.getDiscState() == DiscState.GROUND)
-            {
-                pickup();
-                return;
-            }
+            pickup();
+            return;
         }
 
         // Try to layout
@@ -163,9 +160,23 @@ public class PlayerController : MonoBehaviour
         }
 
         // Move forward fast if running
-        if (animator.GetFloat("Run") == 0.2f)
+        if (animator.GetFloat("Run") == 0.2f && v > 0)
         {
             transform.Translate(Vector3.forward * v * topSpeed * Time.deltaTime);
+        }
+
+        // Check for shuffling
+        if (Input.GetKey("q"))
+        {
+            transform.Translate(-Vector3.right * shuffleSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey("e"))
+        {
+            transform.Translate(Vector3.right * shuffleSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey("s"))
+        {
+            transform.Translate(-Vector3.forward * shuffleSpeed * Time.deltaTime);
         }
 
         // Rotate fast if turning

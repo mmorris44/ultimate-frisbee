@@ -1865,6 +1865,7 @@ GameObject:
   - component: {fileID: 6230054456792687024}
   - component: {fileID: 6230054456792687039}
   - component: {fileID: 6230054456792687038}
+  - component: {fileID: 288543371268266034}
   m_Layer: 0
   m_Name: NormalPlayer
   m_TagString: Untagged
@@ -1991,6 +1992,7 @@ MonoBehaviour:
   layoutRecovery: 2
   turnSpeed: 80
   topSpeed: 3
+  shuffleSpeed: 2
   pivotTurnSpeed: 200
   pivotHorizontalReach: 0.4
   pivotVerticalReach: 0.3
@@ -1998,6 +2000,19 @@ MonoBehaviour:
   reach: 2
   heldDiscTransform: {fileID: 6230054456792686620}
   cameraController: {fileID: 2387376987602460668}
+--- !u!65 &288543371268266034
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6230054456792686615}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.1530514, y: 2.673253, z: 0.682787}
+  m_Center: {x: 0, y: 1.4178739, z: 0}
 --- !u!1 &6230054456792686621
 GameObject:
   m_ObjectHideFlags: 0
