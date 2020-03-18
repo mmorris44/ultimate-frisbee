@@ -1997,9 +1997,11 @@ MonoBehaviour:
   pivotHorizontalReach: 0.4
   pivotVerticalReach: 0.3
   pivotSpeed: 0.01
-  reach: 10
+  reach: 5
   heldDiscTransform: {fileID: 6230054456792686620}
   cameraController: {fileID: 2387376987602460668}
+  playerState: 0
+  discCaught: 0
 --- !u!65 &288543371268266034
 BoxCollider:
   m_ObjectHideFlags: 0

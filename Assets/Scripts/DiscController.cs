@@ -170,7 +170,7 @@ public class DiscController : NetworkBehaviour
         while (Time.time < curveEndTime)
         {
             discBody.AddForce(curveDirection * curveValues[curveIndex]);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
     }
 }

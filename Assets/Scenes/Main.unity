@@ -869,15 +869,15 @@ MonoBehaviour:
   rotationTorque: 100
   discLiftForce: 0.1
   curveValues:
-  - 2
+  - 1
   - 0
-  - -1.5
+  - -1
   durationValues:
   - 0.1
-  - 0.4
-  - 1
-  - 1
-  - 1.2
+  - 1.5
+  - 2
+  - 2
+  - 1.25
   heightValues:
   - 50
   - 50
@@ -888,9 +888,11 @@ MonoBehaviour:
   - 30
   - 90
   - 120
+  - 150
   - 170
-  - 180
   interactAlert: {fileID: 1689645517}
+  heldDiscTransform: {fileID: 0}
+  discState: 0
 --- !u!114 &707896048
 MonoBehaviour:
   m_ObjectHideFlags: 0
