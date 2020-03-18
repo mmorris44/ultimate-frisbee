@@ -25,7 +25,7 @@ public class DiscController : NetworkBehaviour
     private Transform heldDiscTransform;
 
     [SyncVar]
-    public DiscState discState = DiscState.GROUND; // TODO: make private later
+    private DiscState discState = DiscState.GROUND;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +33,7 @@ public class DiscController : NetworkBehaviour
         discBody = GetComponent<Rigidbody>();
         discBody.maxAngularVelocity = 100;
 
-        heldDiscTransform = transform; // TODO: remove later
+        heldDiscTransform = transform;
     }
 
     private void Update()
@@ -96,7 +96,7 @@ public class DiscController : NetworkBehaviour
     // Called when client receives authority over the disc
     public override void OnStartAuthority ()
     {
-        Debug.Log("Auth has been granted, sending request for held disc state update");
+        //Debug.Log("Auth has been granted, sending request for held disc state update");
         CmdPickup();
     }
 
@@ -145,7 +145,7 @@ public class DiscController : NetworkBehaviour
 
         if (collision.gameObject.name == "Ground")
         {
-            Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
+            //Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
             discState = DiscState.GROUND;
         }
     }

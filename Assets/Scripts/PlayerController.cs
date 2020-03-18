@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(1))
         {
-            makeThrow(throwDistance, throwCurve, ThrowType.HAMMER);
+            makeThrow((ThrowDistance) Random.Range(0, 4), (ThrowCurve) Random.Range(0, 2), ThrowType.NORMAL);
         }
     }
 
