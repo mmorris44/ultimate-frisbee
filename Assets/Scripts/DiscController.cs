@@ -154,7 +154,7 @@ public class DiscController : NetworkBehaviour
 
         if (collision.gameObject.name == "Ground")
         {
-            //Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
+            Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
             discState = DiscState.GROUND;
         }
     }

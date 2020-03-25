@@ -14,12 +14,15 @@ public class CameraFree : MonoBehaviour
 
     void Start()
     {
+        if (!isLocalPlayer()) return;
+
         transform.position = GameObject.Find("GameControl/FreeCameraPosition").transform.position;
     }
 
     void Update()
     {
         if (!isLocalPlayer()) return;
+
         yaw += speedH * Input.GetAxis("Mouse X");
         pitch -= speedV * Input.GetAxis("Mouse Y");
 

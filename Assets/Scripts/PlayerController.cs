@@ -69,6 +69,9 @@ public class PlayerController : MonoBehaviour
         interactSlider = interactSliderObject.GetComponent<Slider>();
         interactSliderObject.SetActive(true);
 
+        // Hide self in FP camera
+        MoveToLayer(transform, 8);
+
         animator = GetComponent<Animator>();
         discController = disc.GetComponent<DiscController>();
         playerNetworkController = GetComponentInParent<PlayerNetworkController>();
@@ -280,6 +283,20 @@ public class PlayerController : MonoBehaviour
     {
         v = v / 2;
         h = h / 2;
+    }
+
+    void MoveToLayer(Transform root, int layer)
+    {
+        Stack<Transform> moveTargets = new Stack<Transform>();
+        moveTargets.Push(root);
+        Transform currentTarget;
+        while (moveTargets.Count != 0)
+        {
+            currentTarget = moveTargets.Pop();
+            currentTarget.gameObject.layer = layer;
+            foreach (Transform child in currentTarget)
+                moveTargets.Push(child);
+        }
     }
 
     bool interactInput ()

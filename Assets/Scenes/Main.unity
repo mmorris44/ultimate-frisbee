@@ -508,7 +508,7 @@ Transform:
   - {fileID: 1042992401}
   - {fileID: 1939193900}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &318405693
 GameObject:
@@ -769,12 +769,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 707896041}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -69.1, y: 1.86, z: -39.05}
+  m_LocalPosition: {x: -74.7, y: 2, z: -37.6}
   m_LocalScale: {x: 0.8, y: 0.04424408, z: 0.8}
   m_Children:
   - {fileID: 1689645518}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &707896043
 BoxCollider:
@@ -2005,7 +2005,7 @@ Transform:
   m_Children:
   - {fileID: 752351466}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1733295872
 GameObject:
@@ -2172,12 +2172,12 @@ MonoBehaviour:
   runInBackground: 1
   startOnHeadless: 1
   showDebugMessages: 0
-  serverTickRate: 30
+  serverTickRate: 60
   offlineScene: 
   onlineScene: 
   transport: {fileID: 1921931418}
   networkAddress: localhost
-  maxConnections: 4
+  maxConnections: 14
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 2387376988415360420, guid: 9b5aa465dce963c43853f1638a2f1e4c,
     type: 3}
@@ -2203,7 +2203,7 @@ Transform:
   - {fileID: 106367931}
   - {fileID: 913793963}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1939193899
 GameObject:
@@ -2943,7 +2943,7 @@ Transform:
   m_Children:
   - {fileID: 3026097120026696375}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3026097120026696558
 GameObject:

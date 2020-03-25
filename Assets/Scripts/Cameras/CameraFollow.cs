@@ -12,12 +12,6 @@ public class CameraFollow : MonoBehaviour
     public float maxCamDistance = 10f;
     public float rotationSpeed = 10f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void LateUpdate()
     {
