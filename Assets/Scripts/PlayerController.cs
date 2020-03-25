@@ -3,42 +3,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
-public enum PlayerState { FREE, DISC, MARKING, LAYOUT }
+public enum PlayerState { FREE, DISC, LAYOUT }
 
 public class PlayerController : MonoBehaviour
 {
-    public float layoutSpeed = 10f;
-    public float layoutDuration = 1f;
-    public float layoutRecovery = 1f;
+    // Player attributes
+    public float layoutSpeed = 10f; // Layout speed
+    public float layoutDuration = 1f; // Layout duration
+    public float layoutRecovery = 2f; // Layout recovery time
 
-    public float turnSpeed = 100f;
-    public float topSpeed = 1f;
-    public float shuffleSpeed = 1f;
+    public float turnSpeed = 80f; // Rotation speed
+    public float topSpeed = 3f; // Top speed
+    public float shuffleSpeed = 2f; // Movement on spot
 
-    public float pivotTurnSpeed = 200f;
+    public float pivotTurnSpeed = 200f; // Turn speed when pivoting
     public float pivotHorizontalReach = 0.4f; // Max 1.2
     public float pivotVerticalReach = 0.3f; // Normal height = 1.5, min height = 1, max height 2. So max vertical reach is 0.5
-    public float pivotSpeed = 1f;
+    public float pivotSpeed = 0.01f; // Speed disc moves when pivoting
 
-    public float reach = 2f;
+    public float reach = 5f; // Reach when catching
+    public float maxEnergy = 400f; // Max energy for sprinting and laying out
+    public float interactRecovery = 0.5f; // Time between allowed interactions
 
+    public float energyRecovery = 0.5f; // Energy recovered per frame
+    public float sprintEnergyUsed = 1f; // Energy used to sprint per frame
+    public float layoutEnergyUsed = 50f; // Energy used to layout
+
+    // Public connected objects
     public Transform heldDiscTransform;
     public CameraController cameraController;
+    public Slider energySlider;
+    public Slider interactSlider;
 
+    // Private connected objects
     private Animator animator;
     private DiscController discController;
     private GameObject disc;
     private PlayerNetworkController playerNetworkController;
 
+    // Movement mechanices
     private float v, h, sprint;
     private float layoutEnd;
     private Vector3 initialDiscPosition;
+    private float energy;
+    private float nextInteractTime;
 
-    public PlayerState playerState = PlayerState.FREE; // TODO: Make private
-    public bool discCaught = false; // TODO: Make private
+    // Player state management
+    private PlayerState playerState = PlayerState.FREE;
+    private bool discCaught = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (!isLocalPlayer()) return;
@@ -46,8 +61,12 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         disc = GameObject.Find("Disc");
         discController = disc.GetComponent<DiscController>();
-
         playerNetworkController = GetComponentInParent<PlayerNetworkController>();
+
+        energy = maxEnergy;
+        energySlider.maxValue = maxEnergy;
+        nextInteractTime = Time.time;
+        interactSlider.maxValue = interactRecovery;
     }
 
     // Update is called once per frame
@@ -55,8 +74,11 @@ public class PlayerController : MonoBehaviour
     {
         if (!isLocalPlayer()) return;
 
+        // Update the HUD
+        updateHUD();
+
         // Check sprinting
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && energy > sprintEnergyUsed)
         {
             sprint = 0.2f;
         } else
@@ -86,17 +108,28 @@ public class PlayerController : MonoBehaviour
     {
         if (!isLocalPlayer()) return;
 
-        // Set animation variables
-        animator.SetFloat("Walk", v);
-        animator.SetFloat("Run", sprint);
-        animator.SetFloat("Turn", h);
-
         if (playerState == PlayerState.DISC)
         {
             animator.SetFloat("Walk", 0);
             animator.SetFloat("Run", 0);
             animator.SetFloat("Turn", 0);
+        } else
+        {
+            // Set animation variables
+            animator.SetFloat("Walk", v);
+            animator.SetFloat("Run", sprint);
+            animator.SetFloat("Turn", h);
         }
+
+        // Update resources
+        if (energy < maxEnergy && playerState != PlayerState.LAYOUT) energy += energyRecovery;
+        if (sprint == 0.2f && playerState == PlayerState.FREE) energy -= sprintEnergyUsed;
+    }
+
+    void updateHUD()
+    {
+        energySlider.value = energy;
+        interactSlider.value = interactRecovery - (nextInteractTime - Time.time);
     }
 
     void checkForCatch()
@@ -105,7 +138,7 @@ public class PlayerController : MonoBehaviour
         if (distanceToDisc() < reach && discController.getDiscState() == DiscState.FLIGHT)
         {
             discController.interactAlert.SetActive(true);
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
+            if (interactInput())
             {
                 makeCatch();
             }
@@ -146,7 +179,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey("c")) throwCurve = ThrowCurve.RIGHT;
 
         // Check normal vs hammer throw
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
+        if (interactInput())
         {
             makeThrow(throwDistance, throwCurve, ThrowType.NORMAL);
         }
@@ -177,7 +210,7 @@ public class PlayerController : MonoBehaviour
             discController.interactAlert.SetActive(true);
 
             // Pick up disc
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
+            if (interactInput())
             {
                 pickup();
                 return;
@@ -187,9 +220,10 @@ public class PlayerController : MonoBehaviour
         // Try to layout
         if (Input.GetKeyDown("space"))
         {
-            if (animator.GetFloat("Run") == 0.2f && !animator.GetBool("Jump"))
+            if (animator.GetFloat("Run") == 0.2f && !animator.GetBool("Jump") && energy > layoutEnergyUsed)
             {
                 layout();
+                energy -= layoutEnergyUsed;
             }
         }
 
@@ -221,6 +255,20 @@ public class PlayerController : MonoBehaviour
     {
         v = v / 2;
         h = h / 2;
+    }
+
+    bool interactInput ()
+    {
+        // Check for input
+        bool input = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return);
+        if (!input) return false;
+
+        // Check for cooldown
+        if (Time.time < nextInteractTime) return false;
+
+        // Update cooldown and confirm interaction
+        nextInteractTime = Time.time + interactRecovery;
+        return true;
     }
 
     bool isLocalPlayer ()

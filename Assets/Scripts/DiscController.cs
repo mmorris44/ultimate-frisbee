@@ -94,15 +94,15 @@ public class DiscController : NetworkBehaviour
     [Command]
     public void CmdPickup ()
     {
-        Debug.Log("[SERVER] Request to update disc state received. Current state: " + discState);
+        //Debug.Log("[SERVER] Request to update disc state received. Current state: " + discState);
         discState = DiscState.HELD;
-        Debug.Log("[SERVER] Disc state updated. Changed to: " + discState);
+        //Debug.Log("[SERVER] Disc state updated. Changed to: " + discState);
     }
 
     // Called when client receives authority over the disc
     public override void OnStartAuthority ()
     {
-        Debug.Log("[CLIENT] Auth has been granted, sending request for held disc state update");
+        //Debug.Log("[CLIENT] Auth has been granted, sending request for held disc state update");
         CmdPickup();
     }
 
@@ -154,7 +154,7 @@ public class DiscController : NetworkBehaviour
 
         if (collision.gameObject.name == "Ground")
         {
-            Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
+            //Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
             discState = DiscState.GROUND;
         }
     }
