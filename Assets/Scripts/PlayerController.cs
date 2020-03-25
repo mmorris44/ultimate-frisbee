@@ -34,14 +34,14 @@ public class PlayerController : MonoBehaviour
     // Public connected objects
     public Transform heldDiscTransform;
     public CameraController cameraController;
-    public Slider energySlider;
-    public Slider interactSlider;
 
     // Private connected objects
     private Animator animator;
     private DiscController discController;
     private GameObject disc;
     private PlayerNetworkController playerNetworkController;
+    private Slider energySlider;
+    private Slider interactSlider;
 
     // Movement mechanices
     private float v, h, sprint;
@@ -58,8 +58,18 @@ public class PlayerController : MonoBehaviour
     {
         if (!isLocalPlayer()) return;
 
-        animator = GetComponent<Animator>();
+        // Find game objects
         disc = GameObject.Find("Disc");
+        GameObject energySliderObject = GameObject.Find("/HUD/Canvas/EnergyBar");
+        GameObject interactSliderObject = GameObject.Find("/HUD/Canvas/InteractBar");
+
+        // Show HUD
+        energySlider = energySliderObject.GetComponent<Slider>();
+        energySliderObject.SetActive(true);
+        interactSlider = interactSliderObject.GetComponent<Slider>();
+        interactSliderObject.SetActive(true);
+
+        animator = GetComponent<Animator>();
         discController = disc.GetComponent<DiscController>();
         playerNetworkController = GetComponentInParent<PlayerNetworkController>();
 
@@ -126,6 +136,15 @@ public class PlayerController : MonoBehaviour
         if (sprint == 0.2f && playerState == PlayerState.FREE) energy -= sprintEnergyUsed;
     }
 
+    void LateUpdate()
+    {
+        // Update the next interact time
+        if (interactInput() && interactReady())
+        {
+            setNextInteractTime();
+        }
+    }
+
     void updateHUD()
     {
         energySlider.value = energy;
@@ -138,11 +157,15 @@ public class PlayerController : MonoBehaviour
         if (distanceToDisc() < reach && discController.getDiscState() == DiscState.FLIGHT)
         {
             discController.interactAlert.SetActive(true);
-            if (interactInput())
+
+            // Check for catch
+            if (interactInput() && interactReady())
             {
                 makeCatch();
             }
         }
+
+        
     }
 
     void checkDiscActions()
@@ -179,7 +202,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey("c")) throwCurve = ThrowCurve.RIGHT;
 
         // Check normal vs hammer throw
-        if (interactInput())
+        if (interactInput() && interactReady())
         {
             makeThrow(throwDistance, throwCurve, ThrowType.NORMAL);
         }
@@ -204,18 +227,20 @@ public class PlayerController : MonoBehaviour
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
 
-        
+        // Check if disc in range
         if (distanceToDisc() < 2 && discController.getDiscState() == DiscState.GROUND)
         {
             discController.interactAlert.SetActive(true);
 
             // Pick up disc
-            if (interactInput())
+            if (interactInput() && interactReady())
             {
                 pickup();
                 return;
             }
         }
+
+        
 
         // Try to layout
         if (Input.GetKeyDown("space"))
@@ -259,16 +284,17 @@ public class PlayerController : MonoBehaviour
 
     bool interactInput ()
     {
-        // Check for input
-        bool input = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return);
-        if (!input) return false;
+        return Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return);
+    }
 
-        // Check for cooldown
-        if (Time.time < nextInteractTime) return false;
+    bool interactReady ()
+    {
+        return Time.time > nextInteractTime;
+    }
 
-        // Update cooldown and confirm interaction
+    void setNextInteractTime ()
+    {
         nextInteractTime = Time.time + interactRecovery;
-        return true;
     }
 
     bool isLocalPlayer ()
