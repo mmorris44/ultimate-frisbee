@@ -149,19 +149,21 @@ public class DiscController : NetworkBehaviour
         // Only check for collisions as the server
         if (!isServer) return;
 
+        Debug.Log("Hit " + collision.gameObject.name);
+
         // Don't worry about collision if disc is held
         if (discState == DiscState.HELD) return;
 
         if (collision.gameObject.name == "Ground")
         {
-            Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
+            //Debug.Log("Hit ground at " + collision.GetContact(0).point + ", updating disc state to " + DiscState.GROUND);
             discState = DiscState.GROUND;
         }
     }
 
     IEnumerator CollisionsOnRoutine ()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         discBody.detectCollisions = true;
     }
 

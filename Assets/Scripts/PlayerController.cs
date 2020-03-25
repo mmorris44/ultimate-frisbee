@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
     public float shuffleSpeed = 2f; // Movement on spot
 
     public float pivotTurnSpeed = 200f; // Turn speed when pivoting
-    public float pivotHorizontalReach = 0.4f; // Max 1.2
+    public float pivotHorizontalReach = 0.9f; // Max 1.2, min 0.4
     public float pivotVerticalReach = 0.3f; // Normal height = 1.5, min height = 1, max height 2. So max vertical reach is 0.5
-    public float pivotSpeed = 0.01f; // Speed disc moves when pivoting
+    public float pivotSpeed = 0.02f; // Speed disc moves when pivoting
 
     public float reach = 5f; // Reach when catching
     public float maxEnergy = 400f; // Max energy for sprinting and laying out
@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
         newPosition.x += pivotSpeed * Input.GetAxis("Mouse X");
         if (Mathf.Abs(newPosition.x - initialDiscPosition.x) > pivotHorizontalReach) newPosition.x = heldDiscTransform.localPosition.x;
         newPosition.y += pivotSpeed * Input.GetAxis("Mouse Y");
-        if (Mathf.Abs(newPosition.y - initialDiscPosition.y) > pivotHorizontalReach) newPosition.y = heldDiscTransform.localPosition.y;
+        if (Mathf.Abs(newPosition.y - initialDiscPosition.y) > pivotVerticalReach) newPosition.y = heldDiscTransform.localPosition.y;
         heldDiscTransform.localPosition = newPosition;
 
         // Throw parameters

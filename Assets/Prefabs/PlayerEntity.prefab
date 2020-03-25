@@ -84,7 +84,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2387376987171077917
 Transform:
   m_ObjectHideFlags: 0
@@ -1472,7 +1472,7 @@ GameObject:
   - component: {fileID: 6230054456792687038}
   - component: {fileID: 288543371268266034}
   m_Layer: 0
-  m_Name: NormalPlayer
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1599,9 +1599,9 @@ MonoBehaviour:
   topSpeed: 3
   shuffleSpeed: 2
   pivotTurnSpeed: 200
-  pivotHorizontalReach: 0.4
+  pivotHorizontalReach: 0.9
   pivotVerticalReach: 0.3
-  pivotSpeed: 0.01
+  pivotSpeed: 0.02
   reach: 5
   maxEnergy: 400
   interactRecovery: 0.5
@@ -1794,7 +1794,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6230054456792686794}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.2, z: 0.24}
+  m_LocalPosition: {x: 0, y: 2, z: 0.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6230054456792686664}
@@ -1875,7 +1875,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6230054456792686795}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 1.044}
+  m_LocalPosition: {x: 0, y: 2, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6230054456792686664}
