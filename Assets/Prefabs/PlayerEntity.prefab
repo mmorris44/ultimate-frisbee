@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &348981035
 Transform:
   m_ObjectHideFlags: 0
@@ -407,6 +407,7 @@ GameObject:
   - component: {fileID: 2581337404237586422}
   - component: {fileID: 1369881959259900565}
   - component: {fileID: 406270284}
+  - component: {fileID: 983102525}
   m_Layer: 0
   m_Name: PlayerEntity
   m_TagString: Untagged
@@ -591,6 +592,61 @@ MonoBehaviour:
   playerNameText: {fileID: 1292603107}
   redTeamColor: {fileID: 6832604384595281018}
   blueTeamColor: {fileID: 6832604385853931356}
+--- !u!114 &983102525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2387376988415360420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac703f3407606fe44b71f30d30aa0b6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  layoutSpeed:
+  - 13
+  - 10
+  - 7
+  layoutRecovery:
+  - 1.5
+  - 2
+  - 2.5
+  turnSpeed:
+  - 110
+  - 80
+  - 50
+  topSpeed:
+  - 4
+  - 3
+  - 2
+  shuffleSpeed:
+  - 2.5
+  - 2
+  - 1.5
+  pivotHorizontalReach:
+  - 1.2
+  - 0.9
+  - 0.4
+  pivotVerticalReach:
+  - 0.5
+  - 0.3
+  - 0.1
+  reach:
+  - 7
+  - 6
+  - 5
+  maxEnergy:
+  - 500
+  - 450
+  - 400
+  energyRecovery:
+  - 0.7
+  - 0.6
+  - 0.5
+  playerController: {fileID: 6230054456792687038}
 --- !u!1 &4106832886495658595
 GameObject:
   m_ObjectHideFlags: 0
@@ -3307,9 +3363,9 @@ MonoBehaviour:
   pivotVerticalReach: 0.3
   pivotSpeed: 0.02
   reach: 5
-  maxEnergy: 400
+  maxEnergy: 450
   interactRecovery: 0.5
-  energyRecovery: 0.5
+  energyRecovery: 0.6
   sprintEnergyUsed: 1
   layoutEnergyUsed: 50
   heldDiscTransform: {fileID: 6230054456792686620}
