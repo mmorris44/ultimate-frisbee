@@ -3,14 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum PlayerColor { Red, Blue, None}
+
 public class GameSetup : NetworkBehaviour
 {
     public TextMesh playerNameText;
+    public GameObject redTeamColor, blueTeamColor;
 
     private CanvasVariables canvasVariables;
 
     [SyncVar(hook = nameof(SetPlayerName))]
-    public string playerName = "Player";
+    string playerName = "Player";
+
+    [SyncVar(hook = nameof(SetPlayerColor))]
+    PlayerColor playerColor = PlayerColor.None;
 
     void Start()
     {
@@ -23,7 +29,8 @@ public class GameSetup : NetworkBehaviour
             CmdSetName(canvasVariables.nameField.text);
         }
 
-        canvasVariables.pregameOptions.SetActive(false);
+        // Execute command to set color
+        CmdSetColor((PlayerColor) canvasVariables.teamDropdown.value);
     }
 
     // Sync var updated
@@ -34,8 +41,32 @@ public class GameSetup : NetworkBehaviour
 
     // Command to set the name in the server
     [Command]
-    public void CmdSetName(string newPlayerName)
+    void CmdSetName(string newPlayerName)
     {
         playerName = newPlayerName;
+    }
+
+    // Sync var updated
+    void SetPlayerColor(PlayerColor oldValue, PlayerColor newValue)
+    {
+        redTeamColor.SetActive(false);
+        blueTeamColor.SetActive(false);
+        if (newValue == PlayerColor.Blue)
+        {
+            blueTeamColor.SetActive(true);
+            playerNameText.color = Color.blue;
+        }
+        else if (newValue == PlayerColor.Red)
+        {
+            redTeamColor.SetActive(true);
+            playerNameText.color = Color.red;
+        }
+    }
+
+    // Command to set the color in the server
+    [Command]
+    void CmdSetColor(PlayerColor newPlayerColor)
+    {
+        playerColor = newPlayerColor;
     }
 }

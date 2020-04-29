@@ -60,14 +60,12 @@ public class PlayerController : MonoBehaviour
 
         // Find game objects
         disc = GameObject.Find("Disc");
-        GameObject energySliderObject = GameObject.Find("/HUD/Canvas/EnergyBar");
-        GameObject interactSliderObject = GameObject.Find("/HUD/Canvas/InteractBar");
+        GameObject energySliderObject = GameObject.Find("/HUD/Canvas/IngameDisplay/EnergyBar");
+        GameObject interactSliderObject = GameObject.Find("/HUD/Canvas/IngameDisplay/InteractBar");
 
         // Show HUD
         energySlider = energySliderObject.GetComponent<Slider>();
-        energySliderObject.SetActive(true);
         interactSlider = interactSliderObject.GetComponent<Slider>();
-        interactSliderObject.SetActive(true);
 
         // Hide self in FP camera
         MoveToLayer(transform, 8);
