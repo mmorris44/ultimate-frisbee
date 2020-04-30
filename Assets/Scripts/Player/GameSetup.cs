@@ -23,6 +23,9 @@ public class GameSetup : NetworkBehaviour
         if (!isLocalPlayer) return;
         canvasVariables = GameObject.Find("/GameControl").GetComponent<CanvasVariables>();
 
+        // Hide cursor by default
+        Cursor.visible = false;
+
         // Execute command to set name if not blank
         if (canvasVariables.nameField.text != "")
         {

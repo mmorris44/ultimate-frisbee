@@ -22,24 +22,46 @@ public class CanvasVariables : MonoBehaviour
 
     public GameObject ingameDisplay;
     public GameObject pregameOptions;
+    public GameObject HUDBackground;
+    public NetworkManagerHUD networkManagerHUD;
+    public Button showHelpButton;
+    public Button hideHelpButton;
+
+    private bool prevCursorVis = true;
 
     void Start()
     {
         OnStatDropdownChange();
+        prevCursorVis = Cursor.visible;
     }
 
     void Update()
     {
+        // Check to see if cursor vis has changed
+        if (Cursor.visible != prevCursorVis)
+        {
+            prevCursorVis = Cursor.visible;
+            UpdateUIVisibility();
+        }
+
         // Hide or show player options and HUD
         if (!networkManager.isNetworkActive)
         {
             pregameOptions.SetActive(true);
             ingameDisplay.SetActive(false);
+
+            Cursor.visible = true;
         }
         else
         {
             pregameOptions.SetActive(false);
             ingameDisplay.SetActive(true);
+
+            // Toggle mouse
+            if (Input.GetKeyDown("m"))
+            {
+                Cursor.visible = !Cursor.visible;
+            }
         }
     }
 
@@ -66,6 +88,15 @@ public class CanvasVariables : MonoBehaviour
             validPlayerSetup = true;
             totalText.color = Color.black;
         }
+    }
+
+    // Toggle UI elements based on cursor showing
+    private void UpdateUIVisibility()
+    {
+        HUDBackground.SetActive(Cursor.visible);
+        networkManagerHUD.showGUI = Cursor.visible;
+        showHelpButton.interactable = Cursor.visible;
+        hideHelpButton.interactable = Cursor.visible;
     }
 
     private string TotalText(int pointsUsed)

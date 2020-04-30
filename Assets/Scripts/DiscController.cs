@@ -149,7 +149,7 @@ public class DiscController : NetworkBehaviour
         // Only check for collisions as the server
         if (!isServer) return;
 
-        Debug.Log("Hit " + collision.gameObject.name);
+        //Debug.Log("Hit " + collision.gameObject.name);
 
         // Don't worry about collision if disc is held
         if (discState == DiscState.HELD) return;

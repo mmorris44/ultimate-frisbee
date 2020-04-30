@@ -9,7 +9,7 @@ public enum PlayerState { FREE, DISC, LAYOUT }
 
 public class PlayerController : MonoBehaviour
 {
-    // Player attributes
+    // Player attributes. Set via PlayerPresets
     public float layoutSpeed = 10f; // Layout speed
     public float layoutDuration = 1f; // Layout duration
     public float layoutRecovery = 2f; // Layout recovery time
