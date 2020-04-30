@@ -5,7 +5,7 @@ using TMPro;
 using Mirror;
 using UnityEngine.UI;
 
-public class CanvasVariables : MonoBehaviour
+public class UIController : MonoBehaviour
 {
     public int maxPoints = 5;
     public bool validPlayerSetup = true;
@@ -24,8 +24,10 @@ public class CanvasVariables : MonoBehaviour
     public GameObject pregameOptions;
     public GameObject HUDBackground;
     public NetworkManagerHUD networkManagerHUD;
+
     public Button showHelpButton;
     public Button hideHelpButton;
+    public Button exitButton;
 
     private bool prevCursorVis = true;
 
@@ -90,6 +92,13 @@ public class CanvasVariables : MonoBehaviour
         }
     }
 
+    // Quit the game
+    public void Quit()
+    {
+        Debug.Log("quit");
+        Application.Quit();
+    }
+
     // Toggle UI elements based on cursor showing
     private void UpdateUIVisibility()
     {
@@ -97,6 +106,7 @@ public class CanvasVariables : MonoBehaviour
         networkManagerHUD.showGUI = Cursor.visible;
         showHelpButton.interactable = Cursor.visible;
         hideHelpButton.interactable = Cursor.visible;
+        exitButton.interactable = Cursor.visible;
     }
 
     private string TotalText(int pointsUsed)

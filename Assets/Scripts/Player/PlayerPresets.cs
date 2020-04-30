@@ -27,12 +27,12 @@ public class PlayerPresets : NetworkBehaviour
 
     public PlayerController playerController;
 
-    private CanvasVariables canvasVariables;
+    private UIController canvasVariables;
 
     void Start()
     {
         if (!isLocalPlayer) return;
-        canvasVariables = GameObject.Find("/GameControl").GetComponent<CanvasVariables>();
+        canvasVariables = GameObject.Find("/GameControl").GetComponent<UIController>();
 
         // Set to default if not valid
         if (!canvasVariables.validPlayerSetup)

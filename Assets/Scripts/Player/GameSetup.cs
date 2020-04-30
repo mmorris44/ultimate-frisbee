@@ -10,7 +10,7 @@ public class GameSetup : NetworkBehaviour
     public TextMesh playerNameText;
     public GameObject redTeamColor, blueTeamColor;
 
-    private CanvasVariables canvasVariables;
+    private UIController canvasVariables;
 
     [SyncVar(hook = nameof(SetPlayerName))]
     string playerName = "Player";
@@ -21,7 +21,7 @@ public class GameSetup : NetworkBehaviour
     void Start()
     {
         if (!isLocalPlayer) return;
-        canvasVariables = GameObject.Find("/GameControl").GetComponent<CanvasVariables>();
+        canvasVariables = GameObject.Find("/GameControl").GetComponent<UIController>();
 
         // Hide cursor by default
         Cursor.visible = false;

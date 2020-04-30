@@ -131,6 +131,18 @@ public class DiscController : NetworkBehaviour
         StartCoroutine("CollisionsOnRoutine");
     }
 
+    // Resets the disc position and state
+    public void ResetDisc()
+    {
+        if (!isServer) return; // Only let server reset disc
+        useDiscBody(true);
+        discBody.detectCollisions = true;
+        discBody.velocity = Vector3.zero;
+        discBody.angularVelocity = Vector3.zero;
+        discState = DiscState.FLIGHT;
+        transform.position = new Vector3(0, 5, 0);
+    }
+
     void useDiscBody(bool isActive)
     {
         if (!isActive)
