@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathPlotter : MonoBehaviour
+public class QaudraticPathPlotter : MonoBehaviour
 {
     public float plotGap = 0.1f;
     public float distance = 100f;

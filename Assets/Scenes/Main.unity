@@ -17002,6 +17002,7 @@ GameObject:
   - component: {fileID: 707896048}
   - component: {fileID: 707896049}
   - component: {fileID: 707896050}
+  - component: {fileID: 707896051}
   m_Layer: 0
   m_Name: Disc
   m_TagString: Untagged
@@ -17138,12 +17139,7 @@ MonoBehaviour:
   - 120
   - 150
   - 170
-  discSpeed: []
-  discDistance: []
-  discMaxHeight: []
-  discAngle: []
   interactAlert: {fileID: 1689645517}
-  discFlightPathRoot: {fileID: 515920262}
   heldDiscTransform: {fileID: 0}
   discState: 0
 --- !u!114 &707896048
@@ -17195,6 +17191,22 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   discController: {fileID: 707896047}
+--- !u!114 &707896051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707896041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67f37163dc4ede45b752799c86d7509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropInterval: 0.1
+  dropMarkerPrefab: {fileID: 3986804931121439342, guid: bafda83608c970448b3d6c477dd8645e,
+    type: 3}
+  dropMarkers: []
 --- !u!1 &708147497
 GameObject:
   m_ObjectHideFlags: 0
