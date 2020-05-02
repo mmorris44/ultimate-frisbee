@@ -11,6 +11,7 @@ public class CameraFollow : MonoBehaviour
     public float minCamDistance = 5f;
     public float maxCamDistance = 10f;
     public float rotationSpeed = 10f;
+    public float verticalOffset = 2f;
 
     // Update is called once per frame
     void LateUpdate()
@@ -36,7 +37,7 @@ public class CameraFollow : MonoBehaviour
         playerCenter.y = 0;
         transform.RotateAround(playerCenter, Vector3.up, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime);
 
-        transform.LookAt(player);
+        transform.LookAt(new Vector3(player.position.x, player.position.y + verticalOffset, player.position.z));
     }
 
     bool isLocalPlayer()

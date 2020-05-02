@@ -17130,13 +17130,13 @@ MonoBehaviour:
   heightValues:
   - 50
   - 50
-  - 50
+  - 45
   - 50
   - 50
   distanceValues:
   - 30
   - 90
-  - 120
+  - 130
   - 150
   - 170
   interactAlert: {fileID: 1689645517}
