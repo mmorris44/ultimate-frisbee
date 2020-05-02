@@ -5,7 +5,17 @@ using UnityEngine;
 
 public class ServerControls : NetworkBehaviour
 {
-    public DiscController discController;
+    private DiscController discController;
+    private GameObject disc;
+
+    void Start()
+    {
+        // Only allow if server
+        if (!isServer) return;
+
+        disc = GameObject.Find("Disc");
+        discController = disc.GetComponent<DiscController>();
+    }
 
     void Update()
     {
