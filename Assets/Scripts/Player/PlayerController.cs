@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
     void checkFreeActions()
     {
         // If disc caught, switch to DISC state and stop
-        if (discCaught)
+        if (discCaught && discController.hasAuthority)
         {
             discCaught = false;
             playerState = PlayerState.DISC;
